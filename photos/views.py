@@ -91,8 +91,10 @@ def profile(request):
     return render(request, 'profile.html')
 
 def edit_profile(request):
+    
     if request.method == 'POST':
         form = UserChangeForm(request.POST, instance=request.user)
+        
         if form.is_valid():
             form.save()
             # Redirect to the profile page
