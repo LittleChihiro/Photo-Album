@@ -1,25 +1,30 @@
 from django.shortcuts import render, redirect
 from .models import Category, Photo
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from .views import profile
 
 # Create your views here.
 
 
 def gallery(request):
     category = request.GET.get('category')
-    if category == None:
+
+    if request.user.is_superuser:
         photos = Photo.objects.all()
-
     else:
-        photos = Photo.objects.filter(category__name__contains=category)
+        photos = Photo.objects.filter(user=request.user)
 
+    if category is not None:
+        photos = photos.filter(category__name__contains=category)
       
     categories = Category.objects.all()      
     
     context = {'categories': categories, 'photos': photos}
     return render(request, 'photos/gallery.html', context)
+
 
 def viewPhoto(request, pk):
     photo = Photo.objects.get(id=pk)
@@ -46,6 +51,7 @@ def addPhoto(request):
                 category=category,
                 description=data['description'],
                 image=image,
+                user=request.user  # Hinzufügen des aktuellen Benutzers
             )
 
         return redirect('gallery')
@@ -80,3 +86,18 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'photos/signup.html', {'form': form})
+
+def profile(request):
+    return render(request, 'profile.html')
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            # Redirect to the profile page
+            return redirect('profile')  # Stelle sicher, dass du eine URL mit dem Namen 'profile' hast
+    else:
+        form = UserChangeForm(instance=request.user)
+    
+    return render(request, 'edit_profile.html', {'form': form})
