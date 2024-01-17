@@ -14,5 +14,5 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('edit_profile/', edit_profile, name='edit_profile'),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
-    # ... andere URL-Patterns ...
+
 ]

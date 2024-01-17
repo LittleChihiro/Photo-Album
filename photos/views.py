@@ -77,11 +77,12 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Oder eine andere Seite nach der Registrierung
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('login')
     else:
         form = UserCreationForm()
     return render(request, 'photos/signup.html', {'form': form})
-
 
 def profile(request):
     return render(request, 'photos/profile.html')
@@ -93,8 +94,7 @@ def edit_profile(request):
         
         if form.is_valid():
             form.save()
-            # Redirect to the profile page
-            return redirect('profile')  # Stelle sicher, dass du eine URL mit dem Namen 'profile' hast
+            return redirect('profile')  
     else:
         form = UserChangeForm(instance=request.user)
     
