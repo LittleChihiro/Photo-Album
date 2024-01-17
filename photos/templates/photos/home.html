@@ -15,7 +15,7 @@
     {% if user.is_authenticated %}
         <p>Welcome back, {{ user.username }}! Explore amazing photos <a href="{% url 'gallery' %}">here</a>.</p>
     {% else %}
-        <p>New here? <a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a> or <a href="{% url 'login' %}" class="btn btn-secondary">Log in</a> to start sharing your photos.</p>
+        <p>New here? <a href="{% url 'signup' %}" class="btn btn-primary">Create Account</a> or <a href="{% url 'login' %}" class="btn btn-secondary">Log in</a> to start sharing your photos.</p>
     {% endif %}
 
     </div>

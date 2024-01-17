@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Create Account</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <div class="card my-5">
                 <div class="card-body">
-                    <h3 class="card-title text-center">Sign Up</h3>
+                    <h3 class="card-title text-center">Create Account</h3>
                     
                     <form method="post" action="{% url 'signup' %}">
                         {% csrf_token %}
@@ -34,7 +34,7 @@
                             <label for="password2" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" id="password2" name="password2" required>
                         </div>
-                        <button type="submit" class="btn btn-dark">Sign Up</button>
+                        <button type="submit" class="btn btn-dark">Create Account</button>
                         <a href="{% url 'home' %}" class="btn btn-dark my-3">Go Back</a>
 
                     </form>
