@@ -10,12 +10,25 @@
 <body>
     <div class="container mt-5">
         <h1>Edit Profile</h1>
-        <form method="post">
+        <form method="post" class="row g-3">
             {% csrf_token %}
-            <!-- Assuming you have a form instance passed into the template as 'form' -->
-            {{ form.as_p }}
-
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            {% for field in form %}
+                <div class="col-md-6">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
         </form>
     </div>
     <!-- Bootstrap JavaScript -->

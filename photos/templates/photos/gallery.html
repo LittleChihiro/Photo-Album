@@ -21,12 +21,14 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <a href="{% url 'home' %}" class="navbar-brand">PhotoShare</a>
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle"></i> {{ request.user.username }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -61,11 +63,11 @@
                         </li>
 
                         {%endfor%}
+
+                        <a href="{% url 'home' %}" class="btn btn-dark btn-block btn-sm m-1">Home</a>
                     
                         <a href="{% url 'add' %}" class="btn btn-dark btn-block btn-sm m-1">Add Photo</a>
                         
-                        <button type="button" class="btn btn-dark btn-block btn-sm m-1" 
-                            onclick="location.href='{% url 'login' %}'">Login</button>
                     </ul>
                 </div>
             </div>

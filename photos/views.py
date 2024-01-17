@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .views import profile
 
 # Create your views here.
 
@@ -64,6 +63,7 @@ def loginUser(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
             login(request, user)
             return redirect('gallery')
@@ -71,24 +71,20 @@ def loginUser(request):
             messages.error(request, "Invalid username or password.")
     return render(request, 'photos/login.html')
 
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('gallery')  # Redirect to a desired page
-        else:
-            messages.error(request, "Error")
+            return redirect('login')  # Oder eine andere Seite nach der Registrierung
     else:
         form = UserCreationForm()
     return render(request, 'photos/signup.html', {'form': form})
 
+
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'photos/profile.html')
 
 def edit_profile(request):
     
@@ -102,4 +98,8 @@ def edit_profile(request):
     else:
         form = UserChangeForm(instance=request.user)
     
-    return render(request, 'edit_profile.html', {'form': form})
+    return render(request, 'photos/edit_profile.html', {'form': form})
+
+
+def home(request):
+    return render(request, 'photos/home.html')

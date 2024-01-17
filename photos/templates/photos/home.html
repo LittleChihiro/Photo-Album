@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to PhotoShare</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Welcome to PhotoShare!</h1>
+    <p>This is a place to share your wonderful photos with us.</p>
+
+    {% if user.is_authenticated %}
+        <p>Welcome back, {{ user.username }}! Explore amazing photos <a href="{% url 'gallery' %}">here</a>.</p>
+    {% else %}
+        <p>New here? <a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a> or <a href="{% url 'login' %}" class="btn btn-secondary">Log in</a> to start sharing your photos.</p>
+    {% endif %}
+
+    </div>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
