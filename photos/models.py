@@ -5,8 +5,10 @@ from django.db import models
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, null=False, blank=False)
-    
+    name = models.CharField(max_length=100)
+    is_standard = models.BooleanField(default=False)  # Feld für Standardkategorien
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)  # Feld für Benutzer
+
     def __str__(self):
         return self.name
     

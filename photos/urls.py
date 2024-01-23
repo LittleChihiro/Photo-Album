@@ -2,7 +2,7 @@ import profile
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
-from .views import home, gallery, viewPhoto, addPhoto, loginUser, signup, profile, edit_profile
+from .views import home, gallery, my_view, viewPhoto, addPhoto, loginUser, signup, profile, edit_profile
 
 urlpatterns = [
     path('', home, name='home'),  # Home-Seite als die Standardseite
@@ -14,5 +14,5 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('edit_profile/', edit_profile, name='edit_profile'),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
-
+    path('my/', my_view, name='my_view'),
 ]

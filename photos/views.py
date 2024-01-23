@@ -7,19 +7,39 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+def my_view(request):
+    if request.user.is_authenticated:
+        user_categories = Category.objects.filter(user=request.user)
+        standard_categories = Category.objects.filter(is_standard=True)
+        categories = user_categories | standard_categories
+    else:
+        categories = Category.objects.filter(is_standard=True)
+
+    return render(request, 'photos/my_view.html', {'categories': categories})
+
 
 def gallery(request):
     category = request.GET.get('category')
 
-    if request.user.is_superuser:
-        photos = Photo.objects.all()
-    else:
-        photos = Photo.objects.filter(user=request.user)
+    # Fotos aus der Standardkategorie
+    standard_photos = Photo.objects.filter(category__is_standard=True)
 
+    if request.user.is_superuser:
+        # Wenn der Benutzer ein Superuser ist, zeige alle Fotos
+        photos = Photo.objects.all()
+    elif request.user.is_authenticated:
+        # Fotos des Benutzers und der Standardkategorie
+        user_photos = Photo.objects.filter(user=request.user)
+        photos = user_photos | standard_photos
+    else:
+        # Nur Fotos der Standardkategorie für nicht eingeloggte Benutzer
+        photos = standard_photos
+
+    # Filtern der Fotos, wenn eine spezifische Kategorie ausgewählt wurde
     if category is not None:
         photos = photos.filter(category__name__contains=category)
-      
-    categories = Category.objects.all()      
+
+    categories = Category.objects.all()
     
     context = {'categories': categories, 'photos': photos}
     return render(request, 'photos/gallery.html', context)
