@@ -7,17 +7,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-def my_view(request):
-    if request.user.is_authenticated:
-        user_categories = Category.objects.filter(user=request.user)
-        standard_categories = Category.objects.filter(is_standard=True)
-        categories = user_categories | standard_categories
-    else:
-        categories = Category.objects.filter(is_standard=True)
-
-    return render(request, 'photos/my_view.html', {'categories': categories})
-
-
 def gallery(request):
     category = request.GET.get('category')
 
@@ -43,6 +32,7 @@ def gallery(request):
     
     context = {'categories': categories, 'photos': photos}
     return render(request, 'photos/gallery.html', context)
+
 
 
 def viewPhoto(request, pk):
