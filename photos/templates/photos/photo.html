@@ -26,17 +26,18 @@
             <!-- Foto-Informationen links -->
             <div class="col-md-4">
                 <div class="photo-info">
-                    <h3>Name: {{ photo.name }}</h3><br>
+                    <h3>Image Informations: </h3><br>
+                    <p>Name: {{ photo.name }}</p>
                     <p>Width: {{ photo.width }}px</p>
                     <p>Height: {{ photo.height }}px</p>
-                    <p>Size: {{ photo.size }}MB</p>
+                    <p>Size: {{ photo.size }}KB/MB/GB</p>
                     <p>Format: {{ photo.format }}</p>
                     <p>Copyright: {{ photo.copyright }}</p>
                     <p>Source: {{ photo.source }}</p>
-                    <p>Created at: {{ photo.createdAt }}</p>
-                    <p>Created by: {{ photo.createdBy }}</p>
-                    <p>Updated at: {{ photo.updatedAt }}</p>
-                    <p>Updated by: {{ photo.updatedBy }}</p>
+                    <p>Created at: {{ photo.created_at }}</p>
+                    <p>Created by: {{ photo.created_by }}</p>
+                    <p>Updated at: {{ photo.updated_at }}</p>
+                    <p>Updated by: {{ photo.updated_by }}</p>
                 </div>
             </div>
             

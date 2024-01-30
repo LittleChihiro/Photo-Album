@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from PIL import Image, ExifTags
+
 
 # Create your views here.
 
@@ -33,6 +35,23 @@ def gallery(request):
     context = {'categories': categories, 'photos': photos}
     return render(request, 'photos/gallery.html', context)
 
+
+def get_image_info(image):
+    with Image.open(image) as img:
+        width, height = img.size
+        format = img.format
+        size = round(image.size / (1024 * 1024), 2)  # Größe in MB
+
+        # Versuch, Exif-Daten zu extrahieren
+        exif_data = {}
+        if hasattr(img, '_getexif'):
+            exif = img._getexif()
+            if exif is not None:
+                for tag, value in exif.items():
+                    decoded = ExifTags.TAGS.get(tag, tag)
+                    exif_data[decoded] = value
+
+    return width, height, format, size, exif_data
 
 
 def viewPhoto(request, pk):
