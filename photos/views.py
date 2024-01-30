@@ -40,16 +40,14 @@ def get_image_info(image):
     with Image.open(image) as img:
         width, height = img.size
         format = img.format
-        size = round(image.size / (1024 * 1024), 2)  # Größe in MB
+        size = round(image.size / (1024 * 1024), 2)  
 
-        # Versuch, Exif-Daten zu extrahieren
         exif_data = {}
-        if hasattr(img, '_getexif'):
-            exif = img._getexif()
-            if exif is not None:
-                for tag, value in exif.items():
-                    decoded = ExifTags.TAGS.get(tag, tag)
-                    exif_data[decoded] = value
+        exif = img.getexif()  
+        if exif is not None:
+            for tag, value in exif.items():
+                decoded = ExifTags.TAGS.get(tag, tag)
+                exif_data[decoded] = value
 
     return width, height, format, size, exif_data
 
@@ -75,8 +73,8 @@ def addPhoto(request):
 
         for image in images:
             width, height, format, size, exif_data = get_image_info(image)
-            
-            Photo = Photo.objects.create(
+    
+            photo = Photo.objects.create(
                 category=category,
                 description=data['description'],
                 image=image,
@@ -85,7 +83,6 @@ def addPhoto(request):
                 height=height,
                 format=format,
                 size=size,
-
             )
 
         return redirect('gallery')
