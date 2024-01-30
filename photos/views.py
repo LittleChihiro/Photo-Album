@@ -67,7 +67,6 @@ def addPhoto(request):
 
         if data['category'] != 'none':
             category = Category.objects.get(id=data['category'])
-        
         elif data['category_new'] != '':
             category, created = Category.objects.get_or_create(
                 name=data['category_new'])
@@ -75,11 +74,18 @@ def addPhoto(request):
             category = None
 
         for image in images:
-            photo = Photo.objects.create(
+            width, height, format, size, exif_data = get_image_info(image)
+            
+            Photo = Photo.objects.create(
                 category=category,
                 description=data['description'],
                 image=image,
-                user=request.user  # Hinzufügen des aktuellen Benutzers
+                user=request.user, 
+                width=width,
+                height=height,
+                format=format,
+                size=size,
+
             )
 
         return redirect('gallery')
