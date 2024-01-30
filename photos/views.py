@@ -7,23 +7,23 @@ from django.contrib.auth.decorators import login_required
 from PIL import Image, ExifTags
 
 
-# Create your views here.
+
 
 def gallery(request):
     category = request.GET.get('category')
 
-    # Fotos aus der Standardkategorie
+    
     standard_photos = Photo.objects.filter(category__is_standard=True)
 
     if request.user.is_superuser:
-        # Wenn der Benutzer ein Superuser ist, zeige alle Fotos
+        
         photos = Photo.objects.all()
     elif request.user.is_authenticated:
-        # Fotos des Benutzers und der Standardkategorie
+        
         user_photos = Photo.objects.filter(user=request.user)
         photos = user_photos | standard_photos
     else:
-        # Nur Fotos der Standardkategorie für nicht eingeloggte Benutzer
+        
         photos = standard_photos
 
     # Filtern der Fotos, wenn eine spezifische Kategorie ausgewählt wurde
