@@ -102,6 +102,17 @@
     <!-- Gallery Content -->
     <div class="container">
         <div class="row">
+            <div class="card-header">
+                    
+                <!-- Searchbar -->
+                    <div class="search-bar">
+                        <form action="{% url 'gallery' %}" method="get" style="display: inline-block;">
+                            <input type="text" name="search_query" placeholder="Search photos...">
+                            <button type="submit" class="btn btn-custom btn-secondary">Search</button>
+                        </form>
+                    </div>
+                </div>
+    
             <!-- Categories Sidebar -->
         <div class="col-md-3">
             <div class="card">
@@ -109,6 +120,9 @@
                         Categories
                 </div>
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">    
+                    <a href="{% url 'gallery' %}" class="btn btn-outline-secondary btn-category">All</a>
+                    </li>
                     {% for category in categories %}
                         <li class="list-group-item">
                             <a href="{% url 'gallery' %}?category={{category.name}}" class="btn btn-outline-secondary btn-category">{{ category.name }}</a>

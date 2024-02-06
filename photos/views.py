@@ -8,7 +8,6 @@ from PIL import Image, ExifTags
 
 
 
-
 def gallery(request):
     category = request.GET.get('category')
 
