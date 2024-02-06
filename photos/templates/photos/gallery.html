@@ -123,11 +123,13 @@
                     <li class="list-group-item">    
                     <a href="{% url 'gallery' %}" class="btn btn-outline-secondary btn-category">All</a>
                     </li>
+
                     {% for category in categories %}
                         <li class="list-group-item">
                             <a href="{% url 'gallery' %}?category={{category.name}}" class="btn btn-outline-secondary btn-category">{{ category.name }}</a>
                         </li>
                     {% endfor %}
+
                     <li class="list-group-item">
                         <a href="{% url 'add' %}" class="btn btn-dark btn-category">Add Photo</a>
                     </li>
