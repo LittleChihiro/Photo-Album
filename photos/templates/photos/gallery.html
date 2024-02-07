@@ -79,6 +79,15 @@
             display: block;
         }
 
+        .form-inline {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control {
+            margin-right: 5px; /* Adjust spacing between the input and the button */
+        }
+
     </style>
 </head>
 <body>
@@ -87,6 +96,15 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a href="{% url 'home' %}" class="navbar-brand">PhotoShare</a>
+            
+            <!-- Searchbar -->
+            <div class="search-bar">
+                <form action="{% url 'gallery' %}" method="get" class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search photos..." aria-label="Search">
+                    <button type="submit" class="btn btn-custom btn-dark">Search</button>
+                </form>
+            </div>
+            
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle"></i> {{ request.user.username }}
@@ -102,17 +120,6 @@
     <!-- Gallery Content -->
     <div class="container">
         <div class="row">
-            <div class="card-header">
-                    
-                <!-- Searchbar -->
-                    <div class="search-bar">
-                        <form action="{% url 'gallery' %}" method="get" style="display: inline-block;">
-                            <input type="text" name="search_query" placeholder="Search photos...">
-                            <button type="submit" class="btn btn-custom btn-secondary">Search</button>
-                        </form>
-                    </div>
-                </div>
-    
             <!-- Categories Sidebar -->
         <div class="col-md-3">
             <div class="card">
