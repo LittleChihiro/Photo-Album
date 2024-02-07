@@ -158,12 +158,13 @@
             <!-- Photos Grid -->
             <div class="col-md-9">
                 <div class="row">
-
+                    
                        <!-- Searchbar and Search Filter-->
                         <div class="search-bar mb-3">
                             <form action="{% url 'gallery' %}" method="get" class="input-group">
                                 <input type="text" class="form-control" placeholder="Search photos..." aria-label="Search">
                                 <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Filter
@@ -175,6 +176,7 @@
                                         <li><a class="dropdown-item" href="#">Option 3</a></li>
                                     </ul>
                                 </div>
+
                             </form>
                         </div>
 
