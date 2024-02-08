@@ -34,3 +34,11 @@ class Photo(models.Model):
     created_by = models.ForeignKey(User, related_name='photos_created', on_delete=models.SET_NULL, null=True)
     updated_at = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey(User, related_name='photos_updated', on_delete=models.SET_NULL, null=True)
+    
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('approved', 'Approved'),
+        ('optimized', 'Optimized'),
+        ('locked', 'Locked'),
+    ]
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='new')

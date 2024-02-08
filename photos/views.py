@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ExifTags
 
+from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponseForbidden
 
 
 def gallery(request):
@@ -88,6 +90,24 @@ def addPhoto(request):
 
     context = {'categories': categories}
     return render(request, 'photos/add.html', context)
+
+def change_photo_status(request, photo_id):
+    photo = get_object_or_404(Photo, pk=photo_id)
+
+    if not request.user.has_perm('can_change_status') and not request.user.is_superuser:
+        return HttpResponseForbidden("You do not have permission to change the status of this photo.")
+
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        if new_status in [choice[0] for choice in Photo.STATUS_CHOICES]:
+            photo.status = new_status
+            photo.save()
+            return redirect('your_redirect_view')
+        else:
+            return HttpResponseForbidden("Invalid status option.")
+    
+    return redirect('gallery')
+
 
 def loginUser(request):
     if request.method == 'POST':
