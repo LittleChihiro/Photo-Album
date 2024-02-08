@@ -114,10 +114,19 @@
             display: inline-block;
             margin-right: 5px;
         }
-        .status-new { background-color: #11C6E0; } /* Blau */
-        .status-approved { background-color: #4CC734; } /* Grün */
-        .status-optimized { background-color: #FE8E0D; } /* Orange */
-        .status-locked { background-color: #F30026; } /* Rot */
+
+        .status-new { 
+            background-color: #11C6E0; 
+        } /* Blau */
+        .status-approved { 
+            background-color: #4CC734; 
+        } /* Grün */
+        .status-optimized { 
+            background-color: #FE8E0D; 
+        } /* Orange */
+        .status-locked { 
+            background-color: #F30026; 
+        } /* Rot */
 
 
     </style>
@@ -193,17 +202,20 @@
                             </form>
                         </div>
 
-                    {% for photo in photos %}
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                {% if photo.image %}
-                                    <img src="{{ photo.image.url }}" class="card-img-top image-thumbnail" alt="{{ photo.category.name }}">
-                                {% else %}
-                                    <p class="text-center mt-2">No image available</p>
-                                {% endif %}
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ photo.category.name }}</h6>
-                                    <a href="{% url 'photo' photo.id %}" class="btn btn-outline-dark btn-sm m-1 btn-view-hover">View</a>
+                        <div class="row">
+                            {% for photo in photos %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <!-- Clickable Image -->
+                                    <a href="{% url 'photo' photo.id %}">
+                                        {% if photo.image %}
+                                        <img src="{{ photo.image.url }}" class="card-img-top image-thumbnail" alt="{{ photo.category.name }}">
+                                        {% else %}
+                                        <p class="text-center mt-2">No image available</p>
+                                        {% endif %}
+                                    </a>
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ photo.category.name }}</h6>
 
                                     <!-- Status mit farbigem Kreis neben dem Dropdown -->
                                     <div class="photo-status">
@@ -229,8 +241,6 @@
                             </div>
                         </div>
                         {% endfor %}
-
-
 
                 </div>
             </div>
