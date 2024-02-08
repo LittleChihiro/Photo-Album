@@ -208,14 +208,14 @@
                                     <!-- Status -->
                                     <form method="post" action="{% url 'change_photo_status' photo.id %}">
                                     {% csrf_token %}
-                                    <select name="status" class="form-control form-control-sm" onchange="this.form.submit();">
-                                        {% for status, name in photo.STATUS_CHOICES %}
-                                            <option value="{{ status }}" {% if photo.status == status %} selected {% endif %}>
-                                                {{ name }} 
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </form>
+                                        <select name="status" class="form-control form-control-sm" onchange="this.form.submit();">
+                                            {% for status, name in photo.STATUS_CHOICES %}
+                                                <option value="{{ status }}" {% if photo.status == status %} selected {% endif %}>
+                                                    {{ name }} 
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </form>
                                 </div>
                             </div>
                         </div>
