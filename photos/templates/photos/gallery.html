@@ -206,14 +206,16 @@
                                     <a href="{% url 'photo' photo.id %}" class="btn btn-outline-dark btn-sm m-1 btn-view-hover">View</a>
                                     
                                     <!-- Status-Änderungsformular -->
-                                    <form action="{% url 'change_photo_status' photo.id %}" method="post" onchange="this.submit();">
-                                        {% csrf_token %}
-                                        <select name="status" class="form-control form-control-sm">
-                                            {% for status, name in photo.STATUS_CHOICES %}
-                                                <option value="{{ status }}" {% if photo.status == status %}selected{% endif %}>{{ name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </form>
+                                    <form method="post" action="{% url 'change_photo_status' photo.id %}">
+                                    {% csrf_token %}
+                                    <select name="status" class="form-control form-control-sm" onchange="this.form.submit();">
+                                        {% for status, name in photo.STATUS_CHOICES %}
+                                            <option value="{{ status }}" {% if photo.status == status %} selected {% endif %}>
+                                                {{ name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
                                 </div>
                             </div>
                         </div>

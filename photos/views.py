@@ -92,21 +92,19 @@ def addPhoto(request):
     return render(request, 'photos/add.html', context)
 
 def change_photo_status(request, photo_id):
-    photo = get_object_or_404(Photo, pk=photo_id)
+        photo = get_object_or_404(Photo, pk=photo_id)
+        if request.user != photo.user and not request.user.is_superuser:
+            return HttpResponseForbidden("You do not have permission to change the status of this photo.")
 
-    if not request.user.has_perm('can_change_status') and not request.user.is_superuser:
-        return HttpResponseForbidden("You do not have permission to change the status of this photo.")
-
-    if request.method == 'POST':
-        new_status = request.POST.get('status')
-        if new_status in [choice[0] for choice in Photo.STATUS_CHOICES]:
-            photo.status = new_status
-            photo.save()
-            return redirect('your_redirect_view')
-        else:
-            return HttpResponseForbidden("Invalid status option.")
-    
-    return redirect('gallery')
+        if request.method == 'POST':
+            new_status = request.POST.get('status')
+            if new_status in dict(Photo.STATUS_CHOICES).keys():
+                photo.status = new_status
+                photo.save()
+                # Hier sollten Sie entscheiden, wohin der Benutzer nach der Änderung umgeleitet wird
+                return redirect('gallery') 
+            else:
+                return HttpResponseForbidden("Invalid status option.")
 
 
 def loginUser(request):
