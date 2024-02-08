@@ -114,10 +114,10 @@
             display: inline-block;
             margin-right: 5px;
         }
-        .status-new { background-color: #0000FF; } /* Blau */
-        .status-approved { background-color: #008000; } /* Grün */
-        .status-optimized { background-color: #FFA500; } /* Orange */
-        .status-locked { background-color: #FF0000; } /* Rot */
+        .status-new { background-color: #11C6E0; } /* Blau */
+        .status-approved { background-color: #4CC734; } /* Grün */
+        .status-optimized { background-color: #FE8E0D; } /* Orange */
+        .status-locked { background-color: #F30026; } /* Rot */
 
 
     </style>
@@ -205,13 +205,13 @@
                                     <h6 class="card-title">{{ photo.category.name }}</h6>
                                     <a href="{% url 'photo' photo.id %}" class="btn btn-outline-dark btn-sm m-1 btn-view-hover">View</a>
                                     
-                                    <!-- Status-Änderungsformular -->
+                                    <!-- Status -->
                                     <form method="post" action="{% url 'change_photo_status' photo.id %}">
                                     {% csrf_token %}
                                     <select name="status" class="form-control form-control-sm" onchange="this.form.submit();">
                                         {% for status, name in photo.STATUS_CHOICES %}
                                             <option value="{{ status }}" {% if photo.status == status %} selected {% endif %}>
-                                                {{ name }}
+                                                {{ name }} 
                                             </option>
                                         {% endfor %}
                                     </select>
