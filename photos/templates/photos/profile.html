@@ -9,7 +9,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Your existing styles */
+
     </style>
 </head>
 <body>
@@ -20,11 +20,10 @@
                 <h5 class="card-title">User Information</h5>
                 <p class="card-text"><strong>Username:</strong> {{ request.user.username }}</p>
                 <p class="card-text"><strong>Email:</strong> {{ request.user.email }}</p>
-                <!-- Additional user information here -->
 
                 <!-- Buttons -->
                 <a href="{% url 'edit_profile' %}" class="btn btn-custom btn-primary">Edit Profile</a>
-                <a href="{% url 'login' %}" class="btn btn-custom btn-danger">Logout</a>
+                <a href="{% url 'logout' %}" class="btn btn-custom btn-danger">Logout</a>
 
                 <!-- Go Back Button -->
                 <a href="{% url 'gallery' %}" class="btn btn-custom btn-secondary">Go Back</a>

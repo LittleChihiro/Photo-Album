@@ -39,7 +39,7 @@ def gallery(request):
 
 
 def get_image_info(image):
-    size = round(len(image) / (1024*1024.0), 2)
+    size = round(len(image) / 1024.0, 3)  # KB
     with Image.open(image) as img:
         width, height = img.size
         format = img.format
