@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect
 from .models import Category, Photo
 from django.contrib import messages
@@ -38,10 +39,10 @@ def gallery(request):
 
 
 def get_image_info(image):
+    size = round(len(image) / (1024*1024.0), 2)
     with Image.open(image) as img:
         width, height = img.size
         format = img.format
-        size = round(image.size / (1024 * 1024), 2)  
 
         exif_data = {}
         exif = img.getexif()  
