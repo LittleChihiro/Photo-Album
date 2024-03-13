@@ -87,7 +87,7 @@
         {% if user.is_authenticated %}
             <p class="auth-message">Welcome back, {{ user.username }}! Explore amazing photos <a href="{% url 'gallery' %}" class="btn btn-custom btn-primary">here</a>.</p>
         {% else %}
-            <p class="auth-message">New here? <a href="mailto:pitphoto.supp@gmail.com" class="btn btn-custom btn-primary">Contact Admin</a> or <a href="{% url 'login' %}" class="btn btn-custom btn-secondary">Log in</a> to start sharing your photos.</p>
+            <p class="auth-message">New here? <a href="{% url 'login' %}" class="btn btn-custom btn-secondary">Log in</a> or <a href="mailto:pitphoto.supp@gmail.com" class="btn btn-custom btn-primary">Contact Admin</a> to start sharing your photos.</p>
         {% endif %}
     </div>
 
