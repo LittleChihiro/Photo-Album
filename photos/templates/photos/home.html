@@ -46,10 +46,17 @@
         {% if user.is_authenticated %}
             <p class="auth-message">Welcome back, {{ user.username }}! Explore amazing photos <a href="{% url 'gallery' %}" class="btn btn-custom btn-primary">here</a>.</p>
         {% else %}
-            <p class="auth-message">New here? <a href="{% url 'signup' %}" class="btn btn-custom btn-primary">Create Account</a> or <a href="{% url 'login' %}" class="btn btn-custom btn-secondary">Log in</a> to start sharing your photos.</p>
+            <p class="auth-message">New here? <a href="mailto:pitphoto.supp@gmail.com" class="btn btn-custom btn-primary">Contact Admin</a> or <a href="{% url 'login' %}" class="btn btn-custom btn-secondary">Log in</a> to start sharing your photos.</p>
         {% endif %}
     </div>
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+<footer class="bg-dank text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0,5);">
+        © 2024 PhotoShare Project - Version 1.1.0
+    </div>
+</footer>
+
 </html>
