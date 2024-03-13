@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    {% load static %}
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -35,7 +36,47 @@
         }
         .btn-custom:hover {
             opacity: 0.9;
+        }        
+        
+     /* Carousel Gallery Styles */
+        #galleryCarousel .carousel-inner {
+            width: 100%;
+            max-height: 500px; /* Adjust based on your images */
         }
+
+        #galleryCarousel img {
+            object-fit: cover; /* This will ensure that images cover the area, but it might crop them */
+            border: 2px solid #fff; /* White border around images */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+            max-height: 300px; /* Match the carousel-inner max-height */
+            margin: 0 2px; /* Space out images */
+        }
+
+        #galleryCarousel .carousel-control-prev-icon,
+        #galleryCarousel .carousel-control-next-icon {
+            background-color: rgba(0,0,0,0.5); /* Slightly darker background for the arrows */
+            border-radius: 50%; /* Make the arrows background circular */
+        }
+
+        /* Adjusting the position of the carousel controls */
+        #galleryCarousel .carousel-control-prev, 
+        #galleryCarousel .carousel-control-next {
+            align-items: center; /* Align the arrows vertically */
+            width: 4%; /* Reduce width of clickable arrow area */
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: transparent; /* Clear background */
+            color: #333; /* Match text color to your site */
+            padding-top: 10px; /* Space above footer text */
+            border-top: 1px solid #ddd; /* A subtle separator */
+        }
+        footer .text-center {
+            padding: 10px;
+            font-size: 0.8em; /* Smaller font size for a less obtrusive footer */
+        }
+
     </style>
 </head>
 <body>
@@ -49,14 +90,50 @@
             <p class="auth-message">New here? <a href="mailto:pitphoto.supp@gmail.com" class="btn btn-custom btn-primary">Contact Admin</a> or <a href="{% url 'login' %}" class="btn btn-custom btn-secondary">Log in</a> to start sharing your photos.</p>
         {% endif %}
     </div>
+
+  <!-- Carousel Start -->
+    <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <!-- Carousel item start -->
+        <div class="carousel-item active">
+          <div class="d-flex justify-content-around">
+            <img src="{% static 'images/fly.jpg' %}" alt="Image 1" class="img-fluid">
+            <img src="{% static 'images/cat-kitten.jpg' %}" alt="Image 2" class="img-fluid">
+            <img src="{% static 'images/blossoms.jpg' %}" alt="Image 3" class="img-fluid">
+            
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="d-flex justify-content-around">
+            <img src="{% static 'images/port.jpg' %}" alt="Image 4" class="img-fluid">
+            <img src="{% static 'images/bird.jpg' %}" alt="Image 5" class="img-fluid">
+            <img src="{% static 'images/fern.jpg' %}" alt="Image 6" class="img-fluid">
+            
+          </div>
+        </div>
+        <!-- Carousel item end -->
+        
+      </div>
+      <a class="carousel-control-prev" href="#galleryCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#galleryCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </a>
+    </div>
+    <!-- Carousel End -->
+
+
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
-<footer class="bg-dank text-center text-lg-start">
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0,5);">
+</body>
+<footer>
+    <div class="text-center">
         © 2024 PitPhoto Project - Version 1.0.0
     </div>
 </footer>
-
 </html>
