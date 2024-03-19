@@ -12,26 +12,26 @@ from django.http import HttpResponseForbidden
 
 
 def gallery(request):
-    category = request.GET.get('category')
     query = request.GET.get('query')
+    sort = request.GET.get('sort')
+    status = request.GET.get('status')
 
-    if request.user.is_superuser:
-        photos = Photo.objects.all()
-    elif request.user.is_authenticated:
-        photos = Photo.objects.filter(user=request.user) | Photo.objects.filter(category__is_standard=True)
-    else:
-        photos = Photo.objects.filter(category__is_standard=True)
-
-    if category:
-        photos = photos.filter(category__name__contains=category)
+    photos = Photo.objects.all()
 
     if query:
-        photos = photos.filter(description__icontains=query)
+        photos = photos.filter(description__icontains=query)  # geändert von 'name' zu 'description'
+
+    if status:
+        photos = photos.filter(status=status)
+
+    if sort == 'latest':
+        photos = photos.order_by('-created_at')
 
     categories = Category.objects.all()
-    
     context = {'categories': categories, 'photos': photos}
     return render(request, 'photos/gallery.html', context)
+
+
 
 
 def get_image_info(image):

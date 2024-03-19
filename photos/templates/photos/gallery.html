@@ -185,10 +185,12 @@
                 <div class="row">
                     
                        <!-- Searchbar and Search Filter-->
-                            <div class="search-bar mb-3">
-                                <form action="{% url 'gallery' %}" method="get" class="input-group">
-                                    <input type="text" name="query" class="form-control" placeholder="Search photos..." aria-label="Search" value="{{ request.GET.query }}">
-                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                        <div class="search-bar mb-3">
+                            <form action="{% url 'gallery' %}" method="get" class="input-group">
+                                <input type="text" name="query" class="form-control" placeholder="Search photos..." value="{{ request.GET.query }}">
+                                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                            
+
                                 
                                 <div class="dropdown">
                                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -196,14 +198,18 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <!-- Filter Dropdown-Menu-Options -->
-                                        <li><a class="dropdown-item" href="#">Option 1</a></li>
-                                        <li><a class="dropdown-item" href="#">Option 2</a></li>
-                                        <li><a class="dropdown-item" href="#">Option 3</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'gallery' %}?sort=latest">Latest Uploads</a></li>
+                                        {% for status, name in photo.STATUS_CHOICES %}
+                                            <li><a class="dropdown-item" href="{% url 'gallery' %}?status={{ status }}">{{ name }}</a></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
 
+
+                                
                             </form>
                         </div>
+
 
                         <div class="row">
                             {% for photo in photos %}
