@@ -27,8 +27,8 @@
 
                         <div class="form-group m-3">
                             <label>Name</label>
-                            <input required name="name" type="text" placeholder="Image Name"
-                                class="form-control">
+                                <input required name="name" type="text" placeholder="Image Name" class="form-control">
+
                         </div>
                         
                         <div class="form-group m-3">
@@ -36,6 +36,16 @@
                             <input required name="description" type="text" placeholder="Enter a description"
                                 class="form-control">
                         </div>
+
+                        <!-- Image preview section -->
+                        {% if uploaded_image_urls %}
+                            <div class="form-group m-3">
+                                <label>Image Preview:</label>
+                                {% for url in uploaded_image_urls %}
+                                    <img src="{{ url }}" alt="Uploaded Image" class="img-fluid">
+                                {% endfor %}
+                            </div>
+                        {% endif %}
 
                         <div class="form-group m-3">
                             <label>Upload image</label>

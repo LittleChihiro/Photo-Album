@@ -1,4 +1,5 @@
 import os
+from unicodedata import category
 from django.shortcuts import render, redirect
 from .models import Category, Photo
 from django.contrib import messages
@@ -54,6 +55,7 @@ def viewPhoto(request, pk):
 
 def addPhoto(request):
     categories = Category.objects.all()
+    uploaded_image_urls = []
 
     if request.method == 'POST':
         data = request.POST
@@ -62,26 +64,27 @@ def addPhoto(request):
         if data['category'] != 'none':
             category = Category.objects.get(id=data['category'])
         elif data['category_new'] != '':
-            category, created = Category.objects.get_or_create(
-                name=data['category_new'])
+            category, created = Category.objects.get_or_create(name=data['category_new'])
         else:
             category = None
 
         for image in images:
             width, height, format, size, exif_data = get_image_info(image)
-    
             photo = Photo.objects.create(
+                name=data.get('name'),
                 category=category,
                 description=data['description'],
                 image=image,
-                user=request.user, 
+                user=request.user,
                 width=width,
                 height=height,
                 format=format,
                 size=size,
             )
+            uploaded_image_urls.append(photo.image.url)
 
-        return redirect('gallery')
+        context = {'categories': categories, 'uploaded_image_urls': uploaded_image_urls}
+        return render(request, 'photos/add.html', context)
 
     context = {'categories': categories}
     return render(request, 'photos/add.html', context)

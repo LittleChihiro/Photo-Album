@@ -24,6 +24,7 @@ class Photo(models.Model):
     def __str__(self):
         return self.description
     
+    name = models.CharField(max_length=255)
     width = models.PositiveIntegerField(null=True, blank=True)
     height = models.PositiveIntegerField(null=True, blank=True)
     size = models.FloatField(null=True, blank=True)  # In Megabytes
