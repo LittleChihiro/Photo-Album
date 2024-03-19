@@ -54,7 +54,13 @@
                             <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
                         </svg> Download
                     </a>
+                    <!-- Delete Button Formular -->
+                    <form action="{% url 'delete_photo' photo.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</button>
+                    </form>
                 </div>
+                
             </div>
         </div>
     </div>

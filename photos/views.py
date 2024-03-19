@@ -32,8 +32,6 @@ def gallery(request):
     return render(request, 'photos/gallery.html', context)
 
 
-
-
 def get_image_info(image):
     size = round(len(image) / 1024.0, 3)  # KB
     with Image.open(image) as img:
@@ -88,6 +86,16 @@ def addPhoto(request):
     context = {'categories': categories}
     return render(request, 'photos/add.html', context)
 
+
+def delete_photo(request, photo_id):
+    if request.method == 'POST':
+        photo = get_object_or_404(Photo, id=photo_id)
+        photo.delete()
+        return redirect('gallery')
+    else:
+        return redirect('photo', photo_id=photo_id)
+    
+    
 def change_photo_status(request, photo_id):
         photo = get_object_or_404(Photo, pk=photo_id)
         if request.user != photo.user and not request.user.is_superuser:
