@@ -26,26 +26,14 @@
                         {% csrf_token %}
 
                         <div class="form-group m-3">
-                            <label>Description</label>
-                            <input required name="description" type="text" placeholder="Enter a description"
+                            <label>Name</label>
+                            <input required name="name" type="text" placeholder="Image Name"
                                 class="form-control">
                         </div>
-
+                        
                         <div class="form-group m-3">
-                            <label>Select a category</label>
-                            <select name="category" class="form-control">
-                                <option value='none'>Select a category...</option>
-
-                                {% for category in categories %}
-                                <option value='{{category.id}}'>{{category.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-
-                        <div class="form-group m-3">
-                            <label>Create a new category</label>
-                            <input name="category_new" type="text" placeholder="Create a new category"
+                            <label>Description</label>
+                            <input required name="description" type="text" placeholder="Enter a description"
                                 class="form-control">
                         </div>
 
@@ -54,9 +42,23 @@
                             <input required name="images" type="file" multiple class="form-control-file">
                         </div>
 
-                        <button type='submit' class="btn btn-primary m-3">Submit</button>
+                        <form method="post" action="Ihre_Serverseite_URL">
+                            <div class="form-group m-3">
+                                <label>Select a category</label>
+                                <select name="category" class="form-control" aria-describedby="categoryHelp">
+                                    <option value=''>Select a category...</option>
+                                    {% for category in categories %}
+                                    <option value='{{category.id}}'>{{category.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <small id="categoryHelp" class="form-text text-muted">Contact Admin if you need a new category :)</small>
+                            </div>
 
-                    </form>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="mailto:pitphoto.supp@gmail.com" class="btn btn-custom btn-secondary">Contact Admin</a>
+                        </form>
+
+
                 </div>
             </div>
         </div>
