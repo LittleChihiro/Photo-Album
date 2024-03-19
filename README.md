@@ -1,4 +1,5 @@
-# Development of an Image Database for Website Projects
+# PitPhoto
+Development of an Image Database for Website Projects
 
 ## Project Overview
 
