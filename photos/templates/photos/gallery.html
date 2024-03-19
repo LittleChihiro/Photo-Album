@@ -185,10 +185,10 @@
                 <div class="row">
                     
                        <!-- Searchbar and Search Filter-->
-                        <div class="search-bar mb-3">
-                            <form action="{% url 'gallery' %}" method="get" class="input-group">
-                                <input type="text" class="form-control" placeholder="Search photos..." aria-label="Search">
-                                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                            <div class="search-bar mb-3">
+                                <form action="{% url 'gallery' %}" method="get" class="input-group">
+                                    <input type="text" name="query" class="form-control" placeholder="Search photos..." aria-label="Search" value="{{ request.GET.query }}">
+                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
                                 
                                 <div class="dropdown">
                                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -13,24 +13,20 @@ from django.http import HttpResponseForbidden
 
 def gallery(request):
     category = request.GET.get('category')
-
-    
-    standard_photos = Photo.objects.filter(category__is_standard=True)
+    query = request.GET.get('query')
 
     if request.user.is_superuser:
-        
         photos = Photo.objects.all()
     elif request.user.is_authenticated:
-        
-        user_photos = Photo.objects.filter(user=request.user)
-        photos = user_photos | standard_photos
+        photos = Photo.objects.filter(user=request.user) | Photo.objects.filter(category__is_standard=True)
     else:
-        
-        photos = standard_photos
+        photos = Photo.objects.filter(category__is_standard=True)
 
-    # Filtern der Fotos, wenn eine spezifische Kategorie ausgewählt wurde
-    if category is not None:
+    if category:
         photos = photos.filter(category__name__contains=category)
+
+    if query:
+        photos = photos.filter(description__icontains=query)
 
     categories = Category.objects.all()
     
