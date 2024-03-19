@@ -7,72 +7,86 @@
     <title>Add Photo</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-    <!-- CSS only -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
 </head>
 
 <body class="m-5">
     <div class="container">
-
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <a href="{% url 'gallery' %}" class="btn btn-dark my-3">Go Back</a>
                 <div class="card">
-
-
                     <form method='POST' action="" enctype="multipart/form-data">
                         {% csrf_token %}
-
                         <div class="form-group m-3">
                             <label>Name</label>
-                                <input required name="name" type="text" placeholder="Image Name" class="form-control">
-
+                            <input required name="name" type="text" placeholder="Image Name" class="form-control">
                         </div>
                         
                         <div class="form-group m-3">
                             <label>Description</label>
-                            <input required name="description" type="text" placeholder="Enter a description"
-                                class="form-control">
+                            <input required name="description" type="text" placeholder="Enter a description" class="form-control">
                         </div>
-
-                        <!-- Image preview section -->
-                        {% if uploaded_image_urls %}
-                            <div class="form-group m-3">
-                                <label>Image Preview:</label>
-                                {% for url in uploaded_image_urls %}
-                                    <img src="{{ url }}" alt="Uploaded Image" class="img-fluid">
-                                {% endfor %}
-                            </div>
-                        {% endif %}
 
                         <div class="form-group m-3">
                             <label>Upload image</label>
-                            <input required name="images" type="file" multiple class="form-control-file">
+                            <input required name="images" id="imageInput" type="file" multiple class="form-control-file" onchange="previewImages();">
                         </div>
 
-                        <form method="post" action="Ihre_Serverseite_URL">
-                            <div class="form-group m-3">
-                                <label>Select a category</label>
-                                <select name="category" class="form-control" aria-describedby="categoryHelp">
-                                    <option value=''>Select a category...</option>
-                                    {% for category in categories %}
-                                    <option value='{{category.id}}'>{{category.name}}</option>
-                                    {% endfor %}
-                                </select>
-                                <small id="categoryHelp" class="form-text text-muted">Contact Admin if you need a new category :)</small>
-                            </div>
+                        <div id="imagePreview" class="form-group m-3"></div>
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="mailto:pitphoto.supp@gmail.com" class="btn btn-custom btn-secondary">Contact Admin</a>
-                        </form>
+                        <div class="form-group m-3">
+                            <label>Select a category</label>
+                            <select name="category" class="form-control" aria-describedby="categoryHelp">
+                                <option value=''>Select a category...</option>
+                                {% for category in categories %}
+                                    <option value='{{ category.id }}'>{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                            <small id="categoryHelp" class="form-text text-muted">Contact Admin if you need a new Category :)</small>
+                            </br>
+                        </div>
 
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="mailto:pitphoto.supp@gmail.com" class="btn btn-secondary">Contact Admin</a>                </div>
 
-                </div>
+                    </form>
+
             </div>
         </div>
     </div>
+
+    <script>
+    function previewImages() {
+        var preview = document.querySelector('#imagePreview');
+        preview.innerHTML = '';  // Clear existing images
+        var files = document.querySelector('input[type=file]').files;
+
+        function readAndPreview(file) {
+            // Ensure it's an image
+            if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                var reader = new FileReader();
+
+                reader.onload = function() {
+                    var image = new Image();
+                    image.height = 100;  // Set image height
+                    image.title = file.name;
+                    image.src = this.result;
+                    preview.appendChild(image);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+    }
+    </script>
 </body>
 
 </html>

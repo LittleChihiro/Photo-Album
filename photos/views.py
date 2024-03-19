@@ -55,7 +55,6 @@ def viewPhoto(request, pk):
 
 def addPhoto(request):
     categories = Category.objects.all()
-    uploaded_image_urls = []
 
     if request.method == 'POST':
         data = request.POST
@@ -70,7 +69,7 @@ def addPhoto(request):
 
         for image in images:
             width, height, format, size, exif_data = get_image_info(image)
-            photo = Photo.objects.create(
+            Photo.objects.create(
                 name=data.get('name'),
                 category=category,
                 description=data['description'],
@@ -81,11 +80,11 @@ def addPhoto(request):
                 format=format,
                 size=size,
             )
-            uploaded_image_urls.append(photo.image.url)
 
-        context = {'categories': categories, 'uploaded_image_urls': uploaded_image_urls}
-        return render(request, 'photos/add.html', context)
+        # Weiterleitung zur Galerie-Seite nach dem Speichern der Bilder
+        return redirect('gallery')
 
+    # Bei einem GET-Request das Formular anzeigen
     context = {'categories': categories}
     return render(request, 'photos/add.html', context)
 
