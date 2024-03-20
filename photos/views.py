@@ -14,31 +14,37 @@ from django.http import HttpResponseForbidden
 
 def gallery(request):
     categories = Category.objects.all().order_by('name')
-    pitphotos = categories.filter(name='PitPhotos').first()
-    if pitphotos:
-        categories = [category for category in categories if category.name != 'PitPhotos']
-        categories.insert(0, pitphotos)  # Ensure PitPhotos is at the top
-        
+    pitphotos_category = categories.filter(name='PitPhotos').first()
+
+    # Check if the user is an admin and set the photo queryset accordingly
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            photos = Photo.objects.all()  # Admins see all photos
+        else:
+            # Non-admins see their photos and photos from the "PitPhotos" category
+            user_photos = Photo.objects.filter(user=request.user)
+            pitphotos = Photo.objects.filter(category=pitphotos_category)
+            photos = user_photos | pitphotos  # Combine queries with OR operator
+    else:
+        # Unauthenticated users see only photos from the "PitPhotos" category
+        photos = Photo.objects.filter(category=pitphotos_category)
+
+    # Common filtering for all users
     query = request.GET.get('query')
     sort = request.GET.get('sort')
     status = request.GET.get('status')
-    category_name = request.GET.get('category')  # Capture the category from the request
-
-    photos = Photo.objects.all()
+    category_name = request.GET.get('category')
 
     if query:
         photos = photos.filter(description__icontains=query)
-
     if status:
         photos = photos.filter(status=status)
-
-    if category_name:  # Filter photos based on the category
+    if category_name:
         photos = photos.filter(category__name=category_name)
-
     if sort == 'latest':
         photos = photos.order_by('-created_at')
 
-    context = {'categories': categories, 'photos': photos}
+    context = {'categories': categories, 'photos': photos.distinct()}
     return render(request, 'photos/gallery.html', context)
 
 
