@@ -29,8 +29,8 @@ class Photo(models.Model):
     height = models.PositiveIntegerField(null=True, blank=True)
     size = models.FloatField(null=True, blank=True)  # In Megabytes
     format = models.CharField(max_length=10, null=True, blank=True)
-    copyright = models.CharField(max_length=100, null=True, blank=True)
-    source = models.URLField(null=True, blank=True)
+    copyright = models.CharField(max_length=255, blank=True, null=True)
+    source = models.URLField(max_length=1024, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='photos_created', on_delete=models.SET_NULL, null=True)
     updated_at = models.DateTimeField(auto_now=True)

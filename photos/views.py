@@ -13,22 +13,31 @@ from django.http import HttpResponseForbidden
 
 
 def gallery(request):
+    categories = Category.objects.all().order_by('name')
+    pitphotos = categories.filter(name='PitPhotos').first()
+    if pitphotos:
+        categories = [category for category in categories if category.name != 'PitPhotos']
+        categories.insert(0, pitphotos)  # Ensure PitPhotos is at the top
+        
     query = request.GET.get('query')
     sort = request.GET.get('sort')
     status = request.GET.get('status')
+    category_name = request.GET.get('category')  # Capture the category from the request
 
     photos = Photo.objects.all()
 
     if query:
-        photos = photos.filter(description__icontains=query)  # geändert von 'name' zu 'description'
+        photos = photos.filter(description__icontains=query)
 
     if status:
         photos = photos.filter(status=status)
 
+    if category_name:  # Filter photos based on the category
+        photos = photos.filter(category__name=category_name)
+
     if sort == 'latest':
         photos = photos.order_by('-created_at')
 
-    categories = Category.objects.all()
     context = {'categories': categories, 'photos': photos}
     return render(request, 'photos/gallery.html', context)
 
@@ -54,6 +63,13 @@ def viewPhoto(request, pk):
     return render(request, 'photos/photo.html', {'photo': photo})
 
 def addPhoto(request):
+    categories = Category.objects.exclude(name="PitPhotos") if not request.user.is_superuser else Category.objects.all()
+    
+    if request.method == 'POST':
+        if 'category' in request.POST and request.POST['category'] == str(Category.objects.get(name="PitPhotos").id):
+            if not request.user.is_superuser:
+                return HttpResponseForbidden("Only admins are allowed to add images to the PitPhotos category.")
+            
     categories = Category.objects.all()
 
     if request.method == 'POST':
@@ -79,6 +95,8 @@ def addPhoto(request):
                 height=height,
                 format=format,
                 size=size,
+                copyright=data.get('copyright'),
+                source=data.get('source'),
             )
 
         # Weiterleitung zur Galerie-Seite nach dem Speichern der Bilder

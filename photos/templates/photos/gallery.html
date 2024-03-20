@@ -156,29 +156,37 @@
     <!-- Gallery Content -->
     <div class="container">
         <div class="row">
+            
         <!-- Categories Sidebar -->
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
                         Categories
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">    
-                        <a href="{% url 'gallery' %}" class="btn btn-outline-secondary btn-category">All</a>
-                    </li>
-
-                    {% for category in categories %}
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <!-- Explicitly place "PitPhotos" at the top -->
                         <li class="list-group-item">
-                            <a href="{% url 'gallery' %}?category={{category.name}}" class="btn btn-outline-secondary btn-category">{{ category.name }}</a>
+                            <a href="{% url 'gallery' %}?category=PitPhotos" class="btn btn-outline-secondary btn-category">PitPhotos</a>
                         </li>
-                    {% endfor %}
-
-                    <li class="list-group-item">
-                        <a href="{% url 'add' %}" class="btn btn-dark btn-category">Add Photo</a>
-                    </li>
-                </ul>
+                        <!-- Directly followed by "All" -->
+                        <li class="list-group-item">
+                            <a href="{% url 'gallery' %}" class="btn btn-outline-secondary btn-category">All</a>
+                        </li>
+                        <!-- List the rest of the categories -->
+                        {% for category in categories %}
+                            {% if category.name != "PitPhotos" %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'gallery' %}?category={{ category.name }}" class="btn btn-outline-secondary btn-category">{{ category.name }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        <li class="list-group-item">
+                            <a href="{% url 'add' %}" class="btn btn-dark btn-category">Add Photo</a>
+                        </li>
+                    </ul>
                 </div>
-         </div>
+            </div>
+
 
             <!-- Photos Grid -->
             <div class="col-md-9">
