@@ -32,9 +32,9 @@ class Photo(models.Model):
     copyright = models.CharField(max_length=255, blank=True, null=True)
     source = models.URLField(max_length=1024, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, related_name='photos_created', on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='photos_created', on_delete=models.SET_NULL, null=True)
     updated_at = models.DateTimeField(auto_now=True)
-    updated_by = models.ForeignKey(User, related_name='photos_updated', on_delete=models.SET_NULL, null=True)
+    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='photos_updated', on_delete=models.SET_NULL, null=True)
     
     STATUS_CHOICES = [
         ('new', 'New'),

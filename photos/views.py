@@ -91,7 +91,7 @@ def addPhoto(request):
 
         for image in images:
             width, height, format, size, exif_data = get_image_info(image)
-            Photo.objects.create(
+            photo = Photo.objects.create(
                 name=data.get('name'),
                 category=category,
                 description=data['description'],
@@ -103,6 +103,8 @@ def addPhoto(request):
                 size=size,
                 copyright=data.get('copyright'),
                 source=data.get('source'),
+                created_by=request.user,
+                updated_by=request.user,
             )
 
         # Weiterleitung zur Galerie-Seite nach dem Speichern der Bilder
