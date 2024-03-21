@@ -93,36 +93,25 @@
 
   <!-- Carousel Start -->
     <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <!-- Carousel item start -->
-        <div class="carousel-item active">
-          <div class="d-flex justify-content-around">
-            <img src="{% static 'images/fly.jpg' %}" alt="Image 1" class="img-fluid">
-            <img src="{% static 'images/cat-kitten.jpg' %}" alt="Image 2" class="img-fluid">
-            <img src="{% static 'images/blossoms.jpg' %}" alt="Image 3" class="img-fluid">
-            
-          </div>
+        <div class="carousel-inner">
+            {% for photo_group in grouped_photos %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="d-flex justify-content-around">
+                    {% for photo in photo_group %}
+                    <img src="{{ photo.image.url }}" alt="{{ photo.name }}" class="img-fluid">
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
-
-        <div class="carousel-item">
-          <div class="d-flex justify-content-around">
-            <img src="{% static 'images/port.jpg' %}" alt="Image 4" class="img-fluid">
-            <img src="{% static 'images/bird.jpg' %}" alt="Image 5" class="img-fluid">
-            <img src="{% static 'images/fern.jpg' %}" alt="Image 6" class="img-fluid">
-            
-          </div>
-        </div>
-        <!-- Carousel item end -->
-        
-      </div>
-      <a class="carousel-control-prev" href="#galleryCarousel" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#galleryCarousel" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </a>
+        <a class="carousel-control-prev" href="#galleryCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#galleryCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </a>
     </div>
     <!-- Carousel End -->
 
@@ -131,8 +120,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-<footer class="bg-dank text-center text-lg-start">
-    <div class="text-center p-3" style="margin:10px;","background-color: rgba(0, 0, 0, 0,5);">
+<footer>
+    <div class="text-center">
         © 2024 PitPhoto Project - Version 1.0.0
     </div>
 </footer>

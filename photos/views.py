@@ -12,6 +12,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 
 from django.contrib.auth.models import User
+import random
+
 
 def gallery(request):
     categories = Category.objects.all().order_by('name')
@@ -177,4 +179,16 @@ def edit_profile(request):
 
 
 def home(request):
-    return render(request, 'photos/home.html')
+    try:
+        pitphotos_category = Category.objects.get(name='PitPhotos')
+        photos = Photo.objects.filter(category=pitphotos_category)
+        if photos.exists():
+            random_photos = random.sample(list(photos), k=min(6, len(photos))) 
+            grouped_photos = [random_photos[i:i + 3] for i in range(0, len(random_photos), 3)] 
+        else:
+            grouped_photos = []
+    except Category.DoesNotExist:
+        grouped_photos = []
+
+    context = {'grouped_photos': grouped_photos}
+    return render(request, 'photos/home.html', context)
