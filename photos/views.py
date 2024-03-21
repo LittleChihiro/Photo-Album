@@ -183,7 +183,7 @@ def home(request):
         pitphotos_category = Category.objects.get(name='PitPhotos')
         photos = Photo.objects.filter(category=pitphotos_category)
         if photos.exists():
-            random_photos = random.sample(list(photos), k=min(6, len(photos))) 
+            random_photos = random.sample(list(photos), k=min(9, len(photos))) 
             grouped_photos = [random_photos[i:i + 3] for i in range(0, len(random_photos), 3)] 
         else:
             grouped_photos = []
