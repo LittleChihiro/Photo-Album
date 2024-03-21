@@ -171,7 +171,7 @@ def edit_profile(request):
         try:
             user.save()
             messages.success(request, 'Your profile was successfully updated!')
-            return redirect('profile')  # Ändern Sie dies zur URL Ihres Profils
+            return redirect('profile')
         except Exception as e:
             messages.error(request, f'Error updating profile: {e}')
 

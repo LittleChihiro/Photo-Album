@@ -128,6 +128,10 @@
             background-color: #F30026; /* Red */
         } 
 
+        .status-standard { 
+            background-color: #cfa2f3; /* Pastel Purple */
+        } 
+
         .dropdown-menu {
             z-index: 1050; 
         }
@@ -237,10 +241,11 @@
                                     <!-- Status + Dropdown -->
                                     <div class="photo-status">
                                         <span class="status-dot
-                                            {% if photo.status == 'new' %}status-new
-                                            {% elif photo.status == 'approved' %}status-approved
-                                            {% elif photo.status == 'optimized' %}status-optimized
-                                            {% elif photo.status == 'locked' %}status-locked
+                                            {% if photo.status == 'new' %} status-new
+                                            {% elif photo.status == 'approved' %} status-approved
+                                            {% elif photo.status == 'optimized' %} status-optimized
+                                            {% elif photo.status == 'locked' %} status-locked
+                                            {% elif photo.status == 'standard' %} status-standard
                                             {% endif %}">
                                         </span>
                                         <form method="post" action="{% url 'change_photo_status' photo.id %}" style="display: inline-block;">

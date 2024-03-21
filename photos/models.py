@@ -41,5 +41,6 @@ class Photo(models.Model):
         ('approved', 'Approved'),
         ('optimized', 'Optimized'),
         ('locked', 'Locked'),
+        ('standard', 'Standard'),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='new')
