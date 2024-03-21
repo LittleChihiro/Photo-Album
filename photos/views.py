@@ -11,6 +11,7 @@ from PIL import Image, ExifTags
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 
+from django.contrib.auth.models import User
 
 def gallery(request):
     categories = Category.objects.all().order_by('name')
@@ -157,18 +158,22 @@ def loginUser(request):
 def profile(request):
     return render(request, 'photos/profile.html')
 
+@login_required
 def edit_profile(request):
-    
+    user = request.user
     if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=request.user)
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.last_name = request.POST.get('last_name', user.last_name)
+        user.email = request.POST.get('email', user.email)
         
-        if form.is_valid():
-            form.save()
-            return redirect('profile')  
-    else:
-        form = UserChangeForm(instance=request.user)
-    
-    return render(request, 'photos/edit_profile.html', {'form': form})
+        try:
+            user.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('profile')  # Ändern Sie dies zur URL Ihres Profils
+        except Exception as e:
+            messages.error(request, f'Error updating profile: {e}')
+
+    return render(request, 'photos/edit_profile.html', {'user': user})
 
 
 def home(request):
