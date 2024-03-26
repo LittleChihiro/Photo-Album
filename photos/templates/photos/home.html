@@ -85,7 +85,7 @@
         <p class="main-content">This is a place to share your wonderful photos with us.</p>
 
         {% if user.is_authenticated %}
-            <p class="auth-message">Welcome back, {{ user.username }}! Explore and share amazing photos <a href="{% url 'gallery' %}" class="btn btn-custom btn-primary">here</a></p>
+            <p class="auth-message">Welcome back, {{ user.username }}! Explore your amazing photos <a href="{% url 'gallery' %}" class="btn btn-custom btn-primary">here</a></p>
         {% else %}
             <p class="auth-message">New here? <a href="{% url 'login' %}" class="btn btn-custom btn-secondary">Log in</a> or <a href="mailto:pitphoto.supp@gmail.com" class="btn btn-custom btn-primary">Contact Admin</a> to start sharing your photos.</p>
         {% endif %}
