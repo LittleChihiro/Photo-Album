@@ -175,7 +175,7 @@ def edit_profile(request):
 def logoutUser(request):
 
     logout(request)  
-    return redirect('home')
+    return redirect('photos/home.html')
 
 
 def home(request):
