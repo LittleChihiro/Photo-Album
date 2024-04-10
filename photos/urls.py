@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, gallery, viewPhoto, addPhoto, loginUser, profile, edit_profile, change_photo_status
+from .views import home, gallery, logoutUser, viewPhoto, addPhoto, loginUser, profile, edit_profile, change_photo_status
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 
@@ -13,7 +13,7 @@ urlpatterns = [
     path('login/', loginUser, name='login'),
     path('profile/', profile, name='profile'),
     path('edit_profile/', edit_profile, name='edit_profile'),
-    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
+    path('logout/',logoutUser , name='logout'),     
     path('photo/change-status/<int:photo_id>/', change_photo_status, name='change_photo_status'),
     path('photo/delete/<int:photo_id>/', views.delete_photo, name='delete_photo'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),

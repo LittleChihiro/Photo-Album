@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from .models import Category, Photo
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ExifTags
 
@@ -19,20 +19,17 @@ def gallery(request):
     categories = Category.objects.all().order_by('name')
     pitphotos_category = categories.filter(name='PitPhotos').first()
 
-    # Check if the user is an admin and set the photo queryset accordingly
     if request.user.is_authenticated:
         if request.user.is_superuser:
             photos = Photo.objects.all()  # Admins see all photos
         else:
-            # Non-admins see their photos and photos from the "PitPhotos" category
             user_photos = Photo.objects.filter(user=request.user)
             pitphotos = Photo.objects.filter(category=pitphotos_category)
-            photos = user_photos | pitphotos  # Combine queries with OR operator
+            photos = user_photos | pitphotos
     else:
-        # Unauthenticated users see only photos from the "PitPhotos" category
         photos = Photo.objects.filter(category=pitphotos_category)
 
-    # Common filtering for all users
+    # filtering for all users
     query = request.GET.get('query')
     sort = request.GET.get('sort')
     status = request.GET.get('status')
@@ -113,7 +110,6 @@ def addPhoto(request):
         # Weiterleitung zur Galerie-Seite nach dem Speichern der Bilder
         return redirect('gallery')
 
-    # Bei einem GET-Request das Formular anzeigen
     context = {'categories': categories}
     return render(request, 'photos/add.html', context)
 
@@ -137,7 +133,6 @@ def change_photo_status(request, photo_id):
             if new_status in dict(Photo.STATUS_CHOICES).keys():
                 photo.status = new_status
                 photo.save()
-                # Hier sollten Sie entscheiden, wohin der Benutzer nach der Änderung umgeleitet wird
                 return redirect('gallery') 
             else:
                 return HttpResponseForbidden("Invalid status option.")
@@ -176,6 +171,11 @@ def edit_profile(request):
             messages.error(request, f'Error updating profile: {e}')
 
     return render(request, 'photos/edit_profile.html', {'user': user})
+
+def logoutUser(request):
+
+    logout(request)  
+    return redirect('home')
 
 
 def home(request):
