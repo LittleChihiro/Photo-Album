@@ -2,14 +2,14 @@ import os
 from unicodedata import category
 from django.shortcuts import render, redirect
 from .models import Category, Photo
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ExifTags
 
 from django.shortcuts import get_object_or_404, redirect
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 
 from django.contrib.auth.models import User
 import random
@@ -173,9 +173,9 @@ def edit_profile(request):
     return render(request, 'photos/edit_profile.html', {'user': user})
 
 def logoutUser(request):
-
-    logout(request)  
-    return redirect('photos/home.html')
+    global userid
+    auth.logout(request) 
+    return HttpResponseRedirect("/login/")
 
 
 def home(request):
