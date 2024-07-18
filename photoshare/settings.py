@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-&hgn9^mz+2_%@p)a7k-qt7bk#(@%lqlsl3!oj199=5#(b8nm*d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'Photo-Album.eba-ehdk3gp3.eu-central-1.elasticbeanstalk.com'
+]
 
 
 # Application definition
@@ -69,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'photoshare.wsgi.application'
+WSGI_APPLICATION = 'pitphoto.wsgi.application'
 
 
 # Database
