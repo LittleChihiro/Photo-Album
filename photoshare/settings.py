@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-&hgn9^mz+2_%@p)a7k-qt7bk#(@%lqlsl3!oj199=5#(b8nm*d
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'photoalbum.eba-63nqem8j.eu-central-1.elasticbeanstalk.com'
+    'photoalbum.eba-mnfhvm3e.eu-central-1.elasticbeanstalk.com',
+    'localhost',
+    '127.0.0.1'
 ]
 
 
